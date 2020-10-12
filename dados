@@ -1,0 +1,51 @@
+--===================================================
+-- ETAPA 1: CRIAR BANCO DE DADOS
+--===================================================
+IF OBJECT_ID ('TABELA') IS NOT NULL
+BEGIN DROP TABLE TABELA END
+
+SELECT 'A' AS 'Node','B' as 'Vizinho',1500 as 'Distancia',25 as 'Tempo',5   as 'Risco' into TABELA
+INSERT INTO TABELA SELECT 'A' AS 'Node','D' as 'Vizinho',2500 as 'Distancia',36 as 'Tempo',20  as 'Risco'
+INSERT INTO TABELA SELECT 'B' AS 'Node','A' as 'Vizinho',1500 as 'Distancia',25 as 'Tempo',5   as 'Risco'
+INSERT INTO TABELA SELECT 'D' AS 'Node','A' as 'Vizinho',2500 as 'Distancia',36 as 'Tempo',20  as 'Risco'
+INSERT INTO TABELA SELECT 'B' AS 'Node','D' as 'Vizinho',1500 as 'Distancia',20 as 'Tempo',30  as 'Risco'
+INSERT INTO TABELA SELECT 'B' AS 'Node','E' as 'Vizinho',1000 as 'Distancia',12 as 'Tempo',10  as 'Risco'
+INSERT INTO TABELA SELECT 'B' AS 'Node','C' as 'Vizinho',1000 as 'Distancia',10 as 'Tempo',2   as 'Risco'
+INSERT INTO TABELA SELECT 'C' AS 'Node','B' as 'Vizinho',1000 as 'Distancia',80 as 'Tempo',2   as 'Risco'
+INSERT INTO TABELA SELECT 'C' AS 'Node','E' as 'Vizinho',1200 as 'Distancia',18 as 'Tempo',30  as 'Risco'
+INSERT INTO TABELA SELECT 'C' AS 'Node','G' as 'Vizinho',2100 as 'Distancia',31 as 'Tempo',30  as 'Risco'
+INSERT INTO TABELA SELECT 'D' AS 'Node','B' as 'Vizinho',1500 as 'Distancia',20 as 'Tempo',30  as 'Risco'
+INSERT INTO TABELA SELECT 'D' AS 'Node','E' as 'Vizinho',1000 as 'Distancia',14 as 'Tempo',30  as 'Risco'
+INSERT INTO TABELA SELECT 'D' AS 'Node','I' as 'Vizinho',3000 as 'Distancia',45 as 'Tempo',100 as 'Risco'
+INSERT INTO TABELA SELECT 'D' AS 'Node','F' as 'Vizinho',2000 as 'Distancia',27 as 'Tempo',30  as 'Risco'
+INSERT INTO TABELA SELECT 'E' AS 'Node','B' as 'Vizinho',1000 as 'Distancia',12 as 'Tempo',30  as 'Risco'
+INSERT INTO TABELA SELECT 'E' AS 'Node','C' as 'Vizinho',1200 as 'Distancia',18 as 'Tempo',30  as 'Risco'
+INSERT INTO TABELA SELECT 'E' AS 'Node','G' as 'Vizinho',2500 as 'Distancia',33 as 'Tempo',30  as 'Risco'
+INSERT INTO TABELA SELECT 'E' AS 'Node','H' as 'Vizinho',2000 as 'Distancia',29 as 'Tempo',30  as 'Risco'
+INSERT INTO TABELA SELECT 'E' AS 'Node','I' as 'Vizinho',4200 as 'Distancia',59 as 'Tempo',100 as 'Risco'
+INSERT INTO TABELA SELECT 'E' AS 'Node','D' as 'Vizinho',1000 as 'Distancia',14 as 'Tempo',30  as 'Risco'
+INSERT INTO TABELA SELECT 'F' AS 'Node','D' as 'Vizinho',2000 as 'Distancia',27 as 'Tempo',30  as 'Risco'
+INSERT INTO TABELA SELECT 'F' AS 'Node','I' as 'Vizinho',2300 as 'Distancia',33 as 'Tempo',100 as 'Risco'
+INSERT INTO TABELA SELECT 'G' AS 'Node','C' as 'Vizinho',2110 as 'Distancia',31 as 'Tempo',30  as 'Risco'
+INSERT INTO TABELA SELECT 'G' AS 'Node','E' as 'Vizinho',2500 as 'Distancia',33 as 'Tempo',30  as 'Risco'
+INSERT INTO TABELA SELECT 'G' AS 'Node','H' as 'Vizinho',2100 as 'Distancia',31 as 'Tempo',30  as 'Risco'
+INSERT INTO TABELA SELECT 'H' AS 'Node','G' as 'Vizinho',2000 as 'Distancia',29 as 'Tempo',30  as 'Risco'
+INSERT INTO TABELA SELECT 'H' AS 'Node','E' as 'Vizinho',2000 as 'Distancia',29 as 'Tempo',30  as 'Risco'
+INSERT INTO TABELA SELECT 'H' AS 'Node','I' as 'Vizinho',3700 as 'Distancia',60 as 'Tempo',150 as 'Risco'
+INSERT INTO TABELA SELECT 'I' AS 'Node','H' as 'Vizinho',3700 as 'Distancia',60 as 'Tempo',150 as 'Risco'
+INSERT INTO TABELA SELECT 'I' AS 'Node','F' as 'Vizinho',2300 as 'Distancia',33 as 'Tempo',100 as 'Risco'
+INSERT INTO TABELA SELECT 'I' AS 'Node','E' as 'Vizinho',4200 as 'Distancia',59 as 'Tempo',100 as 'Risco'
+INSERT INTO TABELA SELECT 'I' AS 'Node','D' as 'Vizinho',3000 as 'Distancia',45 as 'Tempo',100 as 'Risco'
+
+--===================================================
+-- ETAPA 2: TRATAR OS DADOS
+--===================================================
+IF OBJECT_ID ('SCORE') IS NOT NULL
+BEGIN DROP TABLE SCORE END
+
+SELECT NODE, VIZINHO, DISTANCIA, TEMPO, RISCO, 
+      (DISTANCIA * TEMPO * RISCO) AS 'SCORE', 
+      ROW_NUMBER() OVER (ORDER BY (NODE + VIZINHO) ASC) AS 'ID_LINHA'
+INTO SCORE
+FROM TABELA
+
