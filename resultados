@@ -1,0 +1,11 @@
+--===================================================
+-- ETAPA 5: CONFERIR O MELHOR RESULTADO
+--===================================================
+
+SELECT * FROM MELHORGERACAO
+
+--===================================================
+-- ETAPA 6: CONFERIR OS RESULTADOS DE TODAS AS GERAÇÕES
+--===================================================
+
+SELECT * FROM E_BESTPATH order by score asc
